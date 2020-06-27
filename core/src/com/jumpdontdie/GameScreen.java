@@ -114,24 +114,36 @@ public class GameScreen extends BaseScreen {
         Texture floorTexture = game.getManager().get("floor.png");
         Texture overfloorTexture = game.getManager().get("overfloor.png");
         Texture spikeTexture = game.getManager().get("spike.png");
+        Texture fontTexture = game.getManager().get("font.png");
         player = new PlayerEntity(world, playerTexture, new Vector2(1.5f, 4.5f));
 
         floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, 0, 1000, 1));
 
-        int math;
-        spikeList.add(new SpikeEntity(world, spikeTexture, 5, 1));
-        floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, 15, 10, 2));
-        spikeList.add(new SpikeEntity(world, spikeTexture, 20, 2));
-        for (int i = 1; i < 1000; i+=13) {
-            math = (int) (Math.random() * 2) + 0;
-            System.out.println(math);
-            if(math==0) {
-                spikeList.add(new SpikeEntity(world, spikeTexture, i+25, 1));
-            }else {
-                floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, i+35, 10, 2));
-                spikeList.add(new SpikeEntity(world, spikeTexture, i+40, 2));
+        int fin = 0;
+        int posicionIncrement = 10;
+        do{
+
+            if(fin<=5){
+                spikeList.add(new SpikeEntity(world, spikeTexture, posicionIncrement, 1));
+            }else{
+                if(fin<=10) {
+                    floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, posicionIncrement, 10, 2));
+                    spikeList.add(new SpikeEntity(world, spikeTexture, posicionIncrement+5, 2));
+                }else{
+                    if(fin<=20){
+                        floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, posicionIncrement, 6, 2));
+                        floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, posicionIncrement+3, 2, 3));
+                        spikeList.add(new SpikeEntity(world, fontTexture, posicionIncrement+2, 2));
+                    }
+                }
             }
-        }
+
+            posicionIncrement +=15;
+            fin += 1;
+
+        }while(fin<20);
+
+
 
         stage.addActor(player);
 
